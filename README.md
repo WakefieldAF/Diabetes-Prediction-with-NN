@@ -1,121 +1,242 @@
 ![](UTA-DataScience-Logo.png)
 
-# Project Title
+# Diabetes Prediction with Neural Network Kaggle Challenge
 
-* **One Sentence Summary** Ex: This repository holds an attempt to apply LSTMs to Stock Market using data from
-"Get Rich" Kaggle challenge (provide link). 
+* This repository attempts to train a feedforward NN for predicting whether a person with the given symptoms has diabetes or not using data from the "Diabetes Prediction" Kaggle challenge
+* [https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview](https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview). 
 
 ## Overview
 
-* This section could contain a short paragraph which include the following:
-  * **Definition of the tasks / challenge**  Ex: The task, as defined by the Kaggle challenge is to use a time series of 12 features, sampled daily for 1 month, to predict the next day's price of a stock.
-  * **Your approach** Ex: The approach in this repository formulates the problem as regression task, using deep recurrent neural networks as the model with the full time series of features as input. We compared the performance of 3 different network architectures.
-  * **Summary of the performance achieved** Ex: Our best model was able to predict the next day stock price within 23%, 90% of the time. At the time of writing, the best performance on Kaggle of this metric is 18%.
+* **Definition of the tasks / challenge** The task here is a binary classification problem where I have to use structured tabular data to predict whether a person has diabetes or not. (0 = no, 1 = yes) The dataset contains one ID column, 8 numerical health-related features, and one target label; for a total of 10 columns - and the goal is to learn patterns that seperate the two classes.
+* **Your approach** My approach to this task is to treat this as a standard supervised learning problem by exploring & cleaning the data, then scaling the features up, testing the different models like Logistic Regression and a Neural Network built with PyTorch. I then also compare how the models perform to see which one is able to handle the data better.
+* **Summary of the performance achieved** From what I could see the Logistic Regression model performed pretty well, however the neural network gave me significantly more flexibility to experiment and improve the performance of the model. Overall the results I achieved are very solid for a starting model; but I believe there is still room to improve with tuning / data preparation.
 
 ## Summary of Workdone
-
-Include only the sections that are relevant an appropriate.
 
 ### Data
 
 * Data:
-  * Type: For example
-    * Input: medical images (1000x1000 pixel jpegs), CSV file: image filename -> diagnosis
-    * Input: CSV file of features, output: signal/background flag in 1st column.
-  * Size: How much data?
-  * Instances (Train, Test, Validation Split): how many data points? Ex: 1000 patients for training, 200 for testing, none for validation
+  * Type: The data is stored in CSV files. The input data contains tabular health-related features, and the output is a binary diabetes label.
+    * Input: The input features are "Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction", and "Age".
+    * Output: The output is the "label" column, where "0" means the person does not have diabetes and "1" means the person does have diabetes.
+  * Size:
+    * Training data: The training dataset has 600 rows and 10 columns. (train.csv)
+    * Test data: The test dataset has 168 rows and 9 columns. (test.csv)
+  * Instances (Train, Test, Validation Split): There are 600 labeled training instances and 168 unlabeled test instances. I used the training data to create my own train/test split for model evaluation with train_test_split.
 
 #### Preprocessing / Clean up
-
-* Describe any manipulations you performed to the data.
+##### Here I went through the dataset step by step to make sure everything is usable:
+* First I check for any missing values using .isnull().sum()
+* Then I look at the data types to make sure everything is as it should be & that my data is the correct data set.
+* I check the class balance using value_counts() on the target column
+* Afterwards I define outliers using the IQR method - But I don't remove them, I just visualize them.
+* And finally I scale the features using StandardScaler; so everything is on the same range.
 
 #### Data Visualization
-
-Show a few visualization of the data and say a few words about what you see.
+#### Here I visualize the data to better understand what's going on with the data:
+* I compare the distributions of features between class 0 and class 1.
+* Then I use boxplots next to each feature to show how values differ & where outliers are.
+* That helps me see which features might actually be useful to me to predict between class 0 and class 1.
+#### From this I can already tell some features separate the classes better than the others.
+![](Histogram-1.png)
+![](Histogram-2.png)
 
 ### Problem Formulation
+#### Input / Output
+* Input: The input to the model is a vector of 8 numerical features:
+ * "Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction", and "Age".
+* Output: The output is a single binary value (0 or 1), where:
+ * 0 = The person Does Not Have Diabetes
+ * 1 = The person Has Diabetes
 
-* Define:
-  * Input / Output
-  * Models
-    * Describe the different models you tried and why.
-  * Loss, Optimizer, other Hyperparameters.
+#### The different models I tried & Why:
+ * **Logistic Regression**
+ * I tried Logistic Regression first since it is a good baseline model for binary classification & I attempted to do this in the labs.
+ * Since the output is only 0 or 1, this model can help me see how well a simple model can seperate the two classes from each other.
+ * **Feedforward Neural Network**
+ * I also tried a feedforward neural network because the challenge called for it & I wanted to see if a more flexible model could perform better than Logistic Regression.
+ * The neural network takes the same 8 input features and passes them through hidden layers before making the final prediction.
+
+#### Loss, Optimizer and Hyperparameters:
+* **Loss Function:** Binary Cross Entropy Loss
+* I used this because the task is binary classification.
+* **Optimizer:** Adam
+* I used Adam because it adjusts the learning rate during training and usually works well for neural networks.
+* **Other Hyperparameters:**
+* Number of input features: 8
+* Number of output values: 1
+* Epochs: At first 200, then 30, then 16.
+* Batch Size: Set using DataLoader.
+* Learning Rate: Set before training, and can be tuned later on.
 
 ### Training
 
-* Describe the training:
-  * How you trained: software and hardware.
-  * How did training take.
-  * Training curves (loss vs epoch for test/train).
-  * How did you decide to stop training.
-  * Any difficulties? How did you resolve them?
+#### Here is how I trained the models:
+* I used PyTorch to build and train the neural network.
+* The data from Pandas and NumPy was converted into tensors and loaded using DataLoader for batching.
+* The model was then trained over multiple epochs repeatedly while tracking the loss as I honed in on it overfitting, till I was satisfied with the model.
+
+##### Training time
+* The training did not take very long since the dataset is relatively small and everything was run locally.
+
+##### Training Curves
+* I tracked the Validation Loss and the Training Loss & Accuracy over each epoch once I found that it was most likely under 30 epochs before overfitting.
+* The loss decreased over time, which showed the model was improving.
+
+##### How I decided to stop training
+* I stopped training after I found the sweet spot of 16 epochs
+* The reason for stopping is because my Validation Loss was not going down anymore, and my Accuracy was not going up any, either.
+
+##### Difficulties
+* The only difficulties I experienced was scaling the features, and making sure the bins were all together and lined up properly.
+* As well as avoiding overfitting with the neural network.
 
 ### Performance Comparison
 
-* Clearly define the key performance metric(s).
-* Show/compare results in one table.
-* Show one (or few) visualization(s) of results, for example ROC curves.
+#### Metrics used:
+* Accuracy was used to measure how often the model predicted the correct class.
+* Training loss was used to see how well the model was learning on the training data.
+* Finally, Validation loss was used to check how well the model performed on unseen data during training.
+
+#### Here are a few visualizations of the data to show how these metrics were used.
+![](30-Epoch.png)
+![](30-Histogram.png)
+![](16-Epoch.png)
+![](16-Histogram.png)
 
 ### Conclusions
 
-* State any conclusions you can infer from your work. Example: LSTM work better than GRU.
+* Simple models like Logistic Regression works very well for this problem.
+* Neural Networks however, provide much more flexibility; though they need tuning to perform better.
+* Since the dataset is not very large or complex, larger models are not necessary.
 
 ### Future Work
 
-* What would be the next thing that you would try.
-* What are some other studies that can be done starting from here.
+#### If I were to continue this project:
+* I would potentially tune the hyperparameters (The learning rate, number of layers, etc...)
+* Maybe try a different model to see how it performs to compare against Logistic Regression and the Neural Network
+* Improve the data preparation and feature usage by looking more closely at outliers, my scaling and which features are most useful for prediction to potentially get a better accuracy.
+* Maybe use cross-validation instead of a single split because it might give a better idea of how well the model performs across different parts of the dataset.
 
 ## How to reproduce results
 
-* In this section, provide instructions at least one of the following:
-   * Reproduce your results fully, including training.
-   * Apply this package to other data. For example, how to use the model you trained.
-   * Use this package to perform their own study.
-* Also describe what resources to use for this package, if appropirate. For example, point them to Collab and TPUs.
+First,
 
+1. Download the dataset from Kaggle or this Repository.
+2. Make sure all of the files ("train.csv", "test.csv", and "sample_submission.csv") are all in the same folder as "DiabetesPrediction.ipynb".
+3. Install the required packages:
+ * pip install pandas numpy matplotlib scikit-learn torch
+4. Open the notebook "DiabetesPrediction.ipynb"
+5. Run all cells in order.
+
+#### After running all cells:
+* The notebook will load, and preprocess the data
+* Train the models (Logistic Regression and Neural Network)
+* Output the evaluation results (Accuracy, Validation Loss, Training Loss)
+
+#### Resources:
+* The project can be run locally using your CPU.
+* It can also be run using Google Colab if you prefer that. You would just have to change the notebook around a bit.
+* A GPU or TPU is not required since the dataset is relatively small.
+  
 ### Overview of files in repository
-
-* Describe the directory structure, if any.
-* List all relavent files and describe their role in the package.
-* An example:
-  * utils.py: various functions that are used in cleaning and visualizing data.
-  * preprocess.ipynb: Takes input data in CSV and writes out data frame after cleanup.
-  * visualization.ipynb: Creates various visualizations of the data.
-  * models.py: Contains functions that build the various models.
-  * training-model-1.ipynb: Trains the first model and saves model during training.
-  * training-model-2.ipynb: Trains the second model and saves model during training.
-  * training-model-3.ipynb: Trains the third model and saves model during training.
-  * performance.ipynb: loads multiple trained models and compares results.
-  * inference.ipynb: loads a trained model and applies it to test data to create kaggle submission.
-
-* Note that all of these notebooks should contain enough text for someone to understand what is happening.
+  * DiabetesPrediction.ipynb:
+   * This is the main file for the entire project.
+   * It includes everything from loading the data, cleaning and preprocessing, visualizing the features, training the models, and evaluating performance.
+  * train.csv:
+   * This is the training dataset provided by Kaggle.
+   * It contains the input features along with the label column used to train the models.
+  * test.csv:
+   * This is the test dataset provided by Kaggle.
+   * It contains the same input features but does not include the label, so it is used for making predictions.
+  * sample_submission.csv:
+   * This is the example format provided by Kaggle.
+   * It shows how the final predictions should be structured for submission.
+  * submission.csv:
+   * This is the output file generated by the model.
+   * It contains the predictions made on the test dataset in the correct format for Kaggle submission.
+  * 30-Epoch.png:
+   * This shows the training and validation loss over 30 epochs.
+   * It helps to visualize how the model is learning over time and whether it is overfitting.
+  * 30-Histogram.png:
+   * This shows the feature distributions and comparisons between the two classes for the 30 epoch run.
+  * 16-Epoch.png:
+   * This shows the training and validation loss over 16 epochs.
+   * It is used to help compare against the 30 epoch model.
+  * 16-Histogram.png:
+   * This shows the feature distributions and comparisons between the two classes for the 16 epoch run.
+  * Histogram-1.png:
+   * This shows distributions of features like pregnancies and glucose separated by label and their relative boxplots.
+   * It helps to further understand how the data is structured.
+  * Histogram-2.png:
+   * This shows additional feature distributions such as blood pressure and skin thickness separated by label and their relative boxplots.
+   * It helps to further understand how the data is structured.
 
 ### Software Setup
-* List all of the required packages.
-* If not standard, provide or point to instruction for installing the packages.
-* Describe how to install your package.
+
+#### Required Packages:
+* PyTorch
+* Pandas
+* NumPy
+* Matplotlib
+* Scikit-learn
+
+##### Installation:
+* **Run this in your environment:**
+ * pip install torch pandas numpy matplotlib scikit-learn
 
 ### Data
 
-* Point to where they can download the data.
-* Lead them through preprocessing steps, if necessary.
+* The dataset can be downloaded directly from here or the Kaggle competition page:
+ * https://www.kaggle.com/competitions/diabetes-prediction-with-nn/data?select=train.csv
+
+* Once the dataset is downloaded, place the files ("train.csv", "test.csv", and "sample_submission.csv") in the same directory as the notebook.
 
 ### Training
 
-* Describe how to train the model
+* To train the model, run all of the cells in "DiabetesPrediction.ipynb"
+
+* **The Notebook will:**
+ * Load and preprocess the dataset.
+ * Split the data into training and validation sets.
+ * Train both the Logistic Regression model and the Neural Network.
+ * Track Training Loss, Validation Loss, and Accuracy over each epoch.
+
+ * The neural network is trained using PyTorch with a fixed number of Epochs (That can be changed - I used 16 for the final model.)
+
+ * If you want to experiment here with it:
+  * You could change the number of epochs, Adjust the learning rate, or modify the number of layers in the network.
 
 #### Performance Evaluation
 
-* Describe how to run the performance evaluation.
+##### **The main metrics used are:**
+ * Accuracy (How often the model predicts correctly)
+ * Training Loss (How well the model fits the training data.)
+ * Validation Loss (How well the model is doing based on the data it has not seen during training.)
 
+##### **These metrics are:**
+ * Printed after each epoch during training.
+ * Visualized using plots next to each other.
+
+ * You can compare different runs (200 Epochs, 30 Epochs or 16 Epochs) using the saved graphs to see how the model behaves and where overfitting begins.
 
 ## Citations
 
-* Provide any references.
-
-
-
-
-
-
-
+* Kaggle Diabetes Prediction Challenge:
+ *  [https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview](https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview)
+* PyTorch Documentation:
+ * [https://docs.pytorch.org/docs/2.11/index.html](https://docs.pytorch.org/docs/2.11/index.html)
+* Scikit-learn Documentation:
+ * [https://scikit-learn.org/stable/index.html](https://scikit-learn.org/stable/index.html)
+* Pandas Documentation:
+ * [https://pandas.pydata.org/docs/](https://pandas.pydata.org/docs/)
+* NumPy Documentation:
+ * [https://numpy.org/doc/](https://numpy.org/doc/)
+* Why Does Obesity Cause Diabetes - PMC:
+ * [https://pmc.ncbi.nlm.nih.gov/articles/PMC8740746/ ](https://pmc.ncbi.nlm.nih.gov/articles/PMC8740746/)
+* Diabetes in the elderly - PMC:
+ * [https://pmc.ncbi.nlm.nih.gov/articles/PMC5509969/](https://pmc.ncbi.nlm.nih.gov/articles/PMC5509969/)
+* Evaluation of Morphological and Structural Skin Alterations on Diabetic Subjects by Biophysical and Imaging Techniques - PMC:
+ * [https://pmc.ncbi.nlm.nih.gov/articles/PMC9962953/](https://pmc.ncbi.nlm.nih.gov/articles/PMC9962953/)
+* Used an LLM to help guide me with some parts of the project.
+ * [https://chatgpt.com/](https://chatgpt.com/)
