@@ -263,7 +263,7 @@
 
    * You can compare different runs (200 Epochs, 30 Epochs or 16 Epochs) using the saved graphs to see how the model behaves and where overfitting begins.
 
-## Citations
+## Citations, Materials Used & Sources.
 
 * Kaggle Diabetes Prediction Challenge:
    *  [https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview](https://www.kaggle.com/competitions/diabetes-prediction-with-nn/overview)
@@ -281,5 +281,7 @@
    * [https://pmc.ncbi.nlm.nih.gov/articles/PMC5509969/](https://pmc.ncbi.nlm.nih.gov/articles/PMC5509969/)
 * Evaluation of Morphological and Structural Skin Alterations on Diabetic Subjects by Biophysical and Imaging Techniques - PMC:
    * [https://pmc.ncbi.nlm.nih.gov/articles/PMC9962953/](https://pmc.ncbi.nlm.nih.gov/articles/PMC9962953/)
+* Class Lecture Slides & ipynb Files from DATA 3402 at UTA.
+   * Lecture Files from Lecture 16 through Lecture 21.
 * Used an LLM to help guide me with some parts of the project.
    * [https://chatgpt.com/](https://chatgpt.com/)
