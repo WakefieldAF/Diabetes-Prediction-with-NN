@@ -50,6 +50,10 @@
 ![](Histogram-2.png)
 
 ### I also added a small "RiskFeature" visualization to test a few features to see which had the strongest impact within the data:
+> *So I am asking the question, and trying to determine an answer to "Do people with diabetes tend to have higher or lower values for each of these features?"*
+
+> *The correlation will help to give a rough idea of how strongly each feature is related to the label (It isn't perfect, But it can help give a little bit more insight into the data.)*
+
   * From this graph, I can see that BMI had the highest impact factor. (This means that it had the strongest relationship / strongest evidence of the three within the model to predict whether or not someone has diabetes.)
   * Age was also important here! But it was not as strong as BMI.
   * SkinThickness also had a impact here; But it was a negative impact. (This means that, Within this model - Higher SkinThickness was associated more with the non-diabetes class compared to other features!)
@@ -58,6 +62,18 @@
 ![](RiskFeatures-Table.png)
 
 ![](RiskFeatures-Plot.png)
+
+### Trying to make sense of the graph above, I looked to the internet to get an explanation.
+
+#### To explain why BMI impacts whether someone would have diabetes or not I found:
+   * "Higher BMI, particularly with excess abdominal fat, increases diabetes risk by triggering insulin resistance, where cells stop responding effectively to insulin, causing the pancreas to overproduce it until it fails. This excess fat promotes inflammation and metabolic changes that impede glucose absorption, leading to high blood sugar."
+     * Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC8740746/
+#### To explain why Age impacts whether someone would have diabetes or not I found:
+   * "Higher age increases diabetes risk primarily due to increased insulin resistance, reduced pancreatic function, and age-related physical changes. As people age, they often experience increased visceral fat, loss of muscle mass (sarcopenia), reduced physical activity, and changes in glucose metabolism, all of which raise blood sugar levels."
+     * Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC5509969/
+#### To explain why SkinThickness impacts whether someone would have diabetes or not I found:
+   * "Increased skin thickness is generally associated with higher insulin levels or collagen structural changes, whereas a thinner dermis is linked to the hyperglycemia and tissue damage caused by Type 2 diabetes. People with thicker, healthy skin may have normal insulin sensitivity and lower glucose levels, as studies show that skin thins and collagen breaks down as diabetes progresses."
+     * Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC9962953/
 
 ## Problem Formulation
 
@@ -192,10 +208,10 @@
   * Histogram-2.png:
      * This shows additional feature distributions such as blood pressure and skin thickness separated by label and their relative boxplots.
      * It helps to further understand how the data is structured.
-  * RiskFeatures-Table.png
+  * RiskFeatures-Table.png:
      * This shows the Impact Factor and Factor Ratio for BMI, Age, and SkinThickness.
      * It helps to show which risk features had the strongest impact within the model.
-  * RiskFeatures-Plot.png
+  * RiskFeatures-Plot.png:
      * This shows a bar graph comparing the Impact Factors of BMI, Age, and SkinThickness.
      * It helps to visualize that BMI had the highest impact, Age with the second highest impact, and SkinThickness having a negative impact.
 
