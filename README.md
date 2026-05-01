@@ -12,7 +12,7 @@
 ### **My approach:**
  * My approach to this task is to treat this as a standard supervised learning problem by exploring & cleaning the data, then scaling the features up, testing the different models like Logistic Regression and a Neural Network built with PyTorch. I then also compare how the models perform to see which one is able to handle the data better.
 ### **Summary of the performance achieved:** 
- * From what I could see the Logistic Regression model performed pretty well, however the neural network gave me significantly more flexibility to experiment and improve the performance of the model. Overall the results I achieved are very solid for a starting model; but I believe there is still room to improve with tuning / data preparation.
+ * From what I could see the Logistic Regression model performed pretty well, however the neural network gave me significantly more flexibility to experiment and improve the performance of the model. Overall the results I achieved are very solid for a starting model at ~81.6% Accuracy; but I believe there is still room to improve with tuning / data preparation.
 
 ## Summary of Work Done:
 
