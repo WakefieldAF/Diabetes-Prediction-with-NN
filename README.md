@@ -151,7 +151,7 @@
    * I am going to make an estimation that the model would be better fitted around 30 Epochs.
 
 ![](30-Epoch.png)
-#### Now looking only at the Data of each Epoch(1~30):
+#### Now looking only at the Data of each Epoch (1~30):
    * It looks like the Data starts to overfit at around between 16 or 17 Epochs. based off of the Validation Loss, and Training Loss; The Accuracy doesn't seem to get any better past this point as well.
 
 #### However, lets look at it in Histogram form again to see if there is a curve visable!
@@ -163,7 +163,7 @@
    * This then confirms the estimation that it would be better fitted around 16 Epochs so I am going to try that now.
 
 ![](16-Epochs.png)
-#### Looking only at the Data of each Epoch(1-16):
+#### Looking only at the Data of each Epoch (1-16):
    * It looks like the Data shows no signs of overfitting based off of the data; Looking at the Validation Loss and Training loss, they both seem to continue to go down, as the Accuracy continues to go up.
 
 #### However, lets look at it in Histogram form one more time to see if there is any curve visable!
