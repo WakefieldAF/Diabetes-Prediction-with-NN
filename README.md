@@ -8,11 +8,7 @@
 ## Overview
 
 ### **Definition of the tasks / challenge:**
- * The task here is a binary classification problem where I have to use structured tabular data to predict whether a person has diabetes or not. (0 = no, 1 = yes) The dataset contains one ID column, 8 numerical health-related features, and one target label - for a total of 10 columns; the goal here is to learn patterns that seperate the two classes.
-### **My approach:**
- * My approach to this task is to treat this as a standard supervised learning problem by exploring & cleaning the data, then scaling the features up, testing the different models like Logistic Regression and a Neural Network built with PyTorch. I then also compare how the models perform to see which one is able to handle the data better.
-### **Summary of the performance achieved:** 
- * From what I could see the Logistic Regression model performed pretty well, however the neural network gave me significantly more flexibility to experiment and improve the performance of the model. Overall the results I achieved are very solid for a starting model at ~81.6% Accuracy; but I believe there is still room to improve with tuning / data preparation.
+ * The task here is a binary classification problem where I have to use structured tabular data to predict whether a person has diabetes or not. (0 = no, 1 = yes) The dataset contains one ID column, 8 numerical health-related features, and one target label - for a total of 10 columns; the goal here is to learn patterns that seperate the two classes. The approach I took to this task is to treat this as a standard supervised learning problem by exploring & cleaning the data, then scaling the features up, testing the different models like Logistic Regression and a Neural Network built with PyTorch. I then also compare how the models perform to see which one is able to handle the data better. From what I could see the Logistic Regression model performed pretty well, however the neural network gave me significantly more flexibility to experiment and improve the performance of the model. Overall the results I achieved are very solid for a starting model at ~81.6% Accuracy; but I believe there is still room to improve with tuning / data preparation.
 
 ## Summary of Work Done:
 
@@ -54,16 +50,24 @@
 
 > *The correlation will help to give a rough idea of how strongly each feature is related to the label (It isn't perfect, But it can help give a little bit more insight into the data.)*
 
-  * From this graph, I can see that BMI had the highest impact factor. (This means that it had the strongest relationship / strongest evidence of the three within the model to predict whether or not someone has diabetes.)
-  * Age was also important here! But it was not as strong as BMI.
-  * SkinThickness also had a impact here; But it was a negative impact. (This means that, Within this model - Higher SkinThickness was associated more with the non-diabetes class compared to other features!)
+### I created the impact factor by training a logistic regression model using only the selected risk features: Age, BMI, and SkinThickness
+  * Before training; I standardized the features so that they were on the same scale.
+  * I then made this feature by training a Logistic Regression Model on the three Features (BMI, Age and SkinThickness) using the model's learned coefficients.
+  * Those coefficients then became my impact_factor values.
 
 ### You can see this from both the Table as well as the Plot on how these features impact the data.
+  * A postitive coefficient / impact factor means that as the feature increases, the model predicts a higher chance of the person having Diabetes.
+  * A negative coefficient / impact factor means that as the feature increases, the model predicts a higher chance of the person not having Diabetes.
+
 ![](RiskFeatures-Table.png)
 
 ![](RiskFeatures-Plot.png)
 
-### Trying to make sense of the graph above, I looked to the internet to get an explanation to confirm my findings.
+  * From this graph, I can see that BMI had the highest impact factor. (This means that it had the strongest relationship / strongest evidence of the three within the model to predict whether or not someone has diabetes.)
+  * Age was also important here! But it was not as strong as BMI.
+  * SkinThickness also had a impact here; But it was a negative impact. (This means that, Within this model - Higher SkinThickness was associated more with the non-diabetes class compared to other features!)
+
+### Trying to make sense of the graph above though, I looked to the internet to get an explanation to confirm my findings.
 
 #### To explain why BMI impacts whether someone would have diabetes or not I found:
    * "Higher BMI, particularly with excess abdominal fat, increases diabetes risk by triggering insulin resistance, where cells stop responding effectively to insulin, causing the pancreas to overproduce it until it fails. This excess fat promotes inflammation and metabolic changes that impede glucose absorption, leading to high blood sugar."
