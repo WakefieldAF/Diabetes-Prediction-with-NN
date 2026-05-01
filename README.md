@@ -55,8 +55,8 @@
   * SkinThickness also had a impact here; But it was a negative impact. (This means that, Within this model - Higher SkinThickness was associated more with the non-diabetes class compared to other features!)
 
 ### You can see this from both the Table as well as the Plot on how these features impact the data.
-![](RiskFeatures-Table.png)
 ![](RiskFeatures-Plot.png)
+![](RiskFeatures-Table.png)
 
 
 ## Problem Formulation
