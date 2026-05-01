@@ -162,7 +162,7 @@
    * We can see this based on the curve on the Validation Loss & Training Loss - After Epoch 16 and Epoch 17; the Accuracy even does not get any better past this point.
    * This then confirms the estimation that it would be better fitted around 16 Epochs so I am going to try that now.
 
-![](16-Epoch.png)
+![](16-Epochs.png)
 #### Looking only at the Data of each Epoch(1-16):
    * It looks like the Data shows no signs of overfitting based off of the data; Looking at the Validation Loss and Training loss, they both seem to continue to go down, as the Accuracy continues to go up.
 
@@ -233,7 +233,7 @@
      * It helps to visualize how the model is learning over time and whether it is overfitting.
   * 30-Histogram.png:
      * This shows the feature distributions and comparisons between the two classes for the 30 epoch run.
-  * 16-Epoch.png:
+  * 16-Epochs.png:
      * This shows the training and validation loss over 16 epochs.
      * It is used to help compare against the 30 epoch model.
   * 16-Histogram.png:
