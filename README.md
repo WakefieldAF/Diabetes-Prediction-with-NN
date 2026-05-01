@@ -63,7 +63,7 @@
 
 ![](RiskFeatures-Plot.png)
 
-### Trying to make sense of the graph above, I looked to the internet to get an explanation.
+### Trying to make sense of the graph above, I looked to the internet to get an explanation to confirm my findings.
 
 #### To explain why BMI impacts whether someone would have diabetes or not I found:
    * "Higher BMI, particularly with excess abdominal fat, increases diabetes risk by triggering insulin resistance, where cells stop responding effectively to insulin, causing the pancreas to overproduce it until it fails. This excess fat promotes inflammation and metabolic changes that impede glucose absorption, leading to high blood sugar."
